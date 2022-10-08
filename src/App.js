@@ -6,9 +6,7 @@ function App() {
   return (
     <main className='App'>
       <AddPostForm />
-      <PostsList />
-    <div>Hello</div>
-      
+      <PostsList />      
     </main>
   );
 }
