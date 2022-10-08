@@ -33,10 +33,11 @@ const postsSlice = createSlice({
   initialState,
   reducers: {
     postAdded: {
-      reducer(state, action, userId) {
+      reducer(state, action) {
         state.push(action.payload)
       },
       prepare(title, content, userId) {
+        
         return {
           payload: {
             id: nanoid(),
@@ -56,8 +57,9 @@ const postsSlice = createSlice({
       }
     },
     reactionAdded(state, action) {
+      console.log(state)
       const { postId, reaction } = action.payload;
-      const existingPost = state.find(post => post.id === postId)
+      const existingPost = state.find(post => post.id === postId);
       if (existingPost) {
         existingPost.reactions[reaction]++
       }
@@ -65,6 +67,7 @@ const postsSlice = createSlice({
   }
 
 })
+
 
 export const selectAllPosts = (state) => state.posts;   // clean code, in case of future changes will only need to be changed here.
 

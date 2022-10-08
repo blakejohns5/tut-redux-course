@@ -12,7 +12,6 @@ const reactionEmoji = {
 
 const ReactionButtons = ({ post }) => {
   const dispatch = useDispatch();
-
   // map over all the emoji names and values
   const reactionButtons = Object.entries(reactionEmoji).map(([name, emoji]) => {
     return (
@@ -20,7 +19,8 @@ const ReactionButtons = ({ post }) => {
         key={name}
         type="button"
         className="reactionButton"
-        onClick={() => dispatch(reactionAdded({ postId: post.id, reaction: name }))
+        onClick={() => 
+          dispatch(reactionAdded({ postId: post.id, reaction: name }))
         }
       >
         {emoji} {post.reactions[name]}

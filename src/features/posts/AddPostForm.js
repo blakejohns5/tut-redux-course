@@ -14,9 +14,9 @@ const AddPostForm = () => {
   const [userId, setUserId] = useState('');
 
   const users = useSelector(selectAllUsers);
-
+  
   const onSavePostClicked = (data) => {
-    console.log(data)
+    
     const { title, content } = data;
 
     if (title && content) {
@@ -33,8 +33,7 @@ const AddPostForm = () => {
   const usersOptions = users.map(user => (
     <option key={user.id} value={user.id}>
       {user.name}
-    </option> 
-    
+    </option>     
   ))
   
   
