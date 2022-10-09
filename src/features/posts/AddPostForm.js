@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux';
-
-import { postAdded } from './postsSlice';
+  
+import { addNewPost } from './postsSlice';
 import { selectAllUsers } from '../users/usersSlice';
 
 const AddPostForm = () => {
@@ -12,31 +12,38 @@ const AddPostForm = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [userId, setUserId] = useState('');
+  const [addRequestStatus, setAddRequestStatus] = useState('idle');
 
   const users = useSelector(selectAllUsers);
   
+  const canSave = [title, content, userId].every(Boolean) && addRequestStatus === 'idle';
+
+  
+
   const onSavePostClicked = (data) => {
     
-    const { title, content } = data;
+    if (canSave) {
+      try {
+        setAddRequestStatus('pending');
+        dispatch(addNewPost({ title, body: content, userId })).unwrap();
 
-    if (title && content) {
-      dispatch(
-        postAdded(title, content, userId)
-      )
-      setTitle('');
-      setContent('');
-    }
+        setTitle('');
+        setContent('');
+        setUserId('');
+      } catch(error) {
+        console.error('Failed to save the post', error)
+      } finally {
+        setAddRequestStatus('idle')
+      }
+    } 
   }
-
-  const canSave = Boolean(title) && Boolean(content) && Boolean(userId);
 
   const usersOptions = users.map(user => (
     <option key={user.id} value={user.id}>
       {user.name}
     </option>     
   ))
-  
-  
+
   return (
     <section className='form__add-post'> 
       <h2>Add a New Post</h2>

@@ -1,36 +1,37 @@
-import { useSelector } from 'react-redux';
-import { selectAllPosts } from './postsSlice';
-import PostAuthor from './PostAuthor';
-import TimeAgo from './TimeAgo';
-import ReactionButtons from './ReactionButtons';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectAllPosts, getPostsStatus, getPostsError, fetchPosts } from './postsSlice';
+import { useEffect } from 'react';
+import PostsExcerpt from './PostsExcerpt';
+import { nanoid } from '@reduxjs/toolkit';
+
 
 const PostsList = () => {
-  
-  // const posts = useSelector(state => state.posts);    // accesses state
-  // better replacement, in case future changes
+  const dispatch = useDispatch();
+     
   const posts = useSelector(selectAllPosts);
-  
-  // localeCompare returns dates in order, slice makes shallow copy of sorted array
-  // then we can map over this array, and most recent posts will appear at the top
-  const orderedPosts = posts.slice().sort((a,b) => b.date.localeCompare(a.date));
-  orderedPosts.map(post => console.log(post))
-   
-  const renderedPosts = orderedPosts.map(post => (
-    <article key={post.id}>
-      <h3>{post.title}</h3>
-      <p>{post.content.substring(0, 100)}</p>
-      <p className="post_credit">
-        <PostAuthor userId={post.userId} />
-        <TimeAgo timestamp={post.date} />
-      </p>
-      <ReactionButtons post={post} />
-    </article>
-  ));
-   
+  const postsStatus = useSelector(getPostsStatus);
+  const error = useSelector(getPostsError);
+
+  useEffect(() => {
+    if (postsStatus === 'idle') {
+      dispatch(fetchPosts())
+    }
+  }, [postsStatus,dispatch])
+
+  let content;
+  if (postsStatus === 'loading') {
+    content = <p>"Loading...</p>;
+  } else if (postsStatus === 'succeeded') {
+    const orderedPosts = posts.slice().sort((a,b) => b.date.localeCompare(a.date));
+    content = orderedPosts.map(post => <PostsExcerpt key={nanoid()} post={post} />)  
+  } else if (postsStatus === 'failed') {
+    content = <p>{error}</p>;
+  }
+ 
   return (
     <section>
       <h2>Posts</h2>
-      {renderedPosts}
+      {content}
     </section>
   )
 }
