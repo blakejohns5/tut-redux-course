@@ -3,10 +3,6 @@ import { sub } from 'date-fns';
 import axios from 'axios';
 
 
-// define base URL
-
-
-
 const initialState = {
   posts: [],
   status: 'idle',  // 'idle' | 'loading' | 'succeeded' | 'failed'
@@ -118,9 +114,12 @@ const postsSlice = createSlice({
 })
 
 
-export const selectAllPosts = (state) => state.posts.posts;   // clean code, in case of future changes will only need to be changed here.
+export const selectAllPosts = (state) => state.posts.posts;   // clean code, in case of 
 export const getPostsStatus = (state) => state.posts.status; 
 export const getPostsError = (state) => state.posts.error; 
+
+// selector for getting post by postId
+export const selectPostById = (state, postId) => state.posts.posts.find(post => post.id === postId)
 
 export const { postAdded, reactionAdded } = postsSlice.actions;
 
