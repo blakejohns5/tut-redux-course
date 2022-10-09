@@ -102,7 +102,7 @@ const EditPostForm = () => {
             defaultValue={userId}
             // value={userId}    // cannot be both controlled / uncontrolled
             {...register("author", {
-              onChange: (e) => {setUserId(e.target.value)},
+              onChange: (e) => {setUserId(Number(e.target.value))},
               required: 'Author is required'
             }) }
           >
