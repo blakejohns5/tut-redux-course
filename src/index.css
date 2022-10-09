@@ -1,3 +1,10 @@
+
+:root {
+  --main-bg-color: #a5a4a6;  
+  --secondary-bg-color: whitesmoke;
+  --highlight-color: #382f4f;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -6,14 +13,14 @@
 
 html {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-  background: rgb(35, 26, 47);  
-  color: whitesmoke;
+  background: var(--main-bg-color);  
+  color: var(--secondary-bg-color);
 }
 
 body {
   min-height: 100vh;
   font-size: 1.5rem;
-  padding: 0 10% 10%;
+  /* padding: 0 10% 10%; */
 }
 
 input,
@@ -26,8 +33,8 @@ select {
 
 button {
   font: inherit;
-  background-color: whitesmoke;
-  color:  rgb(35, 26, 47);
+  background: var(--secondary-bg-color);  
+  color: var(--main-bg-color);  
   padding: 0.25rem 1rem;
   border-radius: 0.5rem;
   margin-bottom: 2rem;
@@ -41,14 +48,19 @@ main {
 section {
   margin-top: 1em;
   
+  
 }
+
+
 
 article {
   width: 100%;
   margin: 0.5em 0.5em 0.5em 0;
-  border: 1px solid whitesmoke;
+  border: 1px double var(--highlight-color);
   border-radius: 10px;
   padding: 1em;
+  background-color: var(--secondary-bg-color);
+  color: #2d2d2d;
   
 }
 
@@ -70,16 +82,25 @@ form {
 }
 
 
-.postCredit {
+
+.post__credit > {
   font-size: 1rem;
+  color: var(--main-bg-color);
 }
+
+.post__credit > a {
+  margin-right: 2rem;
+}
+
+
 
 .reactionButton {
   margin: 0 0.25em 0 0;
   background: transparent;
   border: none;
-  color: whitesmoke;
+  color: var(--secondary-bg-color);
   font-size: 1rem;
+  color: var(--highlight-color);
 }
 
 
@@ -99,7 +120,34 @@ form {
   align-items: center;
   border-radius: 10px;  
   
-  width: 80%;
+  /* width: 80%; */
 }
 
 
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--highlight-color);
+  color: var(--secondary-bg-color);
+  margin: 0 0;
+  padding: 0.5rem 10%;
+}
+
+.header > nav > ul {
+  margin-left: 5rem;
+  display: flex;
+    
+  gap: 3rem;
+}
+
+.nav__list ul {
+  display: flex;
+  list-style: none;
+}
+
+.nav__list a {  
+  text-decoration: none;
+  color: var(--secondary-bg-color);
+}
