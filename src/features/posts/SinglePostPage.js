@@ -7,11 +7,11 @@ import ReactionButtons from "./ReactionButtons";
 
 import React from 'react'
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const SinglePostPage = ( ) => {
   // retrieve postId
-  const postId = useParams().postId;
-  console.log(postId)
+  const { postId } = useParams();
 
   const post = useSelector((state) => selectPostById(state, Number(postId)))
 
@@ -26,9 +26,10 @@ const SinglePostPage = ( ) => {
 
   return (
     <article>
-    <h3>{post.title}</h3>
+    <h2>{post.title}</h2>
     <p>{post.body}</p> 
     <p className="post_credit">
+      <Link to={`/post/edit/${post.id}`}>Edit Post</Link>
       <PostAuthor userId={post.userId} />
       <TimeAgo timestamp={post.date} />
     </p>

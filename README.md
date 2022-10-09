@@ -29,4 +29,35 @@ The bulletin board app will be re-factored into multi-page blog with full CRUD o
   <Link to={`post/${post.id}`}>View Post</Link>
   ```
 
+## Add Layout View
+
+- Create components folder, and add file for layout component.
+- In Layout, include `Outlet` from react-router-dom.
+- Then include layout as `Route` encompassing all others in App.js, and add Routing to index, then to path 'post'. Within path 'post', link to index for AddPostForm and postId for SinglePostPage.
+- Create Header component and include in Layout.js.
+
+## Edit Post Page
+
+- Go to SinglePostPage.js, and import `Link` from react-router-dom.
+- Add Link to returned jsx, above PostAuthor and TimeAgo:
+  ```
+  <Link to={`/post/edit/${post.id}`}>Edit Post</Link>
+  ```
+- Create the EditPostForm.js and add code, mixing elements of SinglePostPage and AddPostForm.
+  - Here we add a bit more information when dispatching the new post information for the update, and we also use useNavigate() to see the new post when we're finished.
+
+- Add updatePost thunk to postsSlice
+- Add case to extraReducers in postsSlice
+
+## Delete Post Page
+
+- Repeat steps from Edit Post Page, with a few changes.
+- Add delete function to EditPostForm, then button with onClick that calls the delete function.
+
+## Correction Refresh issue
+
+If you refresh from the SinglePostPage, this leads you to page not found.
+- You can dispatch the fetchPosts from the index, as was earlier done with users.
+- Then go to the PostsLists page and remove unnecessary elements: useDispatch, fetchPosts, etc.
+
 
