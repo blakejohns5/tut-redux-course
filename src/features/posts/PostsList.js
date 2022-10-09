@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { selectAllPosts, getPostsStatus, getPostsError } from './postsSlice';
+import { selectPostIds, getPostsStatus, getPostsError } from './postsSlice';
 
 import PostsExcerpt from './PostsExcerpt';
 import { nanoid } from '@reduxjs/toolkit';
@@ -7,7 +7,7 @@ import { nanoid } from '@reduxjs/toolkit';
 
 const PostsList = () => {
      
-  const posts = useSelector(selectAllPosts);
+  const orderedPostIds = useSelector(selectPostIds);
   const postsStatus = useSelector(getPostsStatus);
   const error = useSelector(getPostsError);
 
@@ -17,8 +17,9 @@ const PostsList = () => {
   if (postsStatus === 'loading') {
     content = <p>"Loading...</p>;
   } else if (postsStatus === 'succeeded') {
-    const orderedPosts = posts.slice().sort((a,b) => b.date.localeCompare(a.date));
-    content = orderedPosts.map(post => <PostsExcerpt key={nanoid()} post={post} />)  
+    // next line not needed, now taken care of by the createEntityAdapter in postSlice
+    // const orderedPosts = posts.slice().sort((a,b) => b.date.localeCompare(a.date));
+    content = orderedPostIds.map(postId => <PostsExcerpt key={nanoid()} postId={postId} />)  
   } else if (postsStatus === 'failed') {
     content = <p>{error}</p>;
   }
