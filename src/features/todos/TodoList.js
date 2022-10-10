@@ -1,68 +1,97 @@
- import { FaTrash, FaUpload } from 'react-icons/fa'
- import { useState } from 'react';
- import { useForm } from 'react-hook-form';
- import { ErrorMessage } from '@hookform/error-message';
+import { useAddTodoMutation, useGetTodosQuery, useUpdateTodoMutation, useDeleteTodoMutation } from '../api/apiSlice';
+import { FaUpload, FaTrash } from 'react-icons/fa'
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
 
 
- import React from 'react'
- 
- export const TodoList = () => {
+export const TodoList = () => {
   const [ newTodo, setNewTodo ] = useState('');
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setNewTodo(''); // add new todo
-  // }
+  // use / define the hook from apiSlice
+  const {
+    data: todos,
+    isLoading,
+    isSuccess,
+    isError,
+    error
+  } = useGetTodosQuery();
+
+  // get the functions from the other apiSlice hooks
+  const [ addTodo ] = useAddTodoMutation();
+  const [ updateTodo ] = useUpdateTodoMutation();
+  const [ deleteTodo ] = useDeleteTodoMutation();
+
 
   const onSubmit = (data) => {
-    console.log(data);
+    addTodo({ userId: 1, title: newTodo, completed: false })
+    setNewTodo('');
   }
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    defaultValues: {
-      email: '',
-      username: '',
-      password: '',
-      confirmPassword: '',
-    },
-  });
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  //   {
+  //   defaultValues: {
+  //     newTodo: '',
+  //   },
+  // });
 
-  const newItemSection = 
+  const newItemSection =
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h2>Todos</h2>
-        <label htmlFor="new-todo">Enter a new todo</label>'
-        <div className="new-todo">
-          <input
-            className="signup__input"
-            name="new-todo"            
-            type="text"
-            id="newTodo"
-            placeholder="Enter a new to-do task"  
-            value={newTodo}      
-            onChange={(e) => setNewTodo(e.target.value)}    
-            {...register('new-todo', {
-              required: 'A to-do task is required',
-            })}
-          />
-        </div>
-        <ErrorMessage errors={errors} name="new-todo" as="p" />
-        <button className="submit">
-          <FaUpload />
-        </button>
-      
+      <label htmlFor="new-todo">Enter a new todo</label>'
+      <div className="new-todo">
+        <input
+          className="signup__input"
+          name="new-todo"
+          type="text"
+          placeholder="Enter a new to-do task"
+          defaultValue={newTodo}
+          onChange={(e) => setNewTodo(e.target.value)}
+          {...register('newTodo', {
+            required: 'A to-do task is required',
+          })}
+        />
+      </div>
+      <ErrorMessage errors={errors} name="new-todo" as="p" />
+      <button className="submit">
+        <FaUpload />
+      </button>
     </form>
 
     let content;
-    // define additional content
+    if (isLoading) {
+      content = <p>Loading...</p>
+    } else if (isSuccess) {
+      content = todos.map(todo => (
+        <article key={todo.id}>
+          <div className="todo">
+            <input
+              type="checkbox"
+              checked={todo.completed}
+              id={todo.id}
+              onChange={() => updateTodo({...todo, completed: !todo.completed })}
+            />
+            <label htmlFor={todo.id}>{todo.title}</label>
+          </div>
+          <button className='trash' onClick={() => deleteTodo({ id: todo.id })}>
+            <FaTrash />
+          </button>
+
+        </article>
+      ))
+    } else if (isError) {
+      content = <p>{error}</p>
+    }
 
   return (
+    <>
     <main>
         <h1>Todo List</h1>
         {newItemSection}
         {content}
     </main>
+    </>
   )
 }
- 
+
 
 export default TodoList;
