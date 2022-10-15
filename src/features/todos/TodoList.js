@@ -7,14 +7,13 @@ import { ErrorMessage } from '@hookform/error-message';
 
 export const TodoList = () => {
   const [ newTodo, setNewTodo ] = useState('');
-
   // use / define the hook from apiSlice
   const {
     data: todos,
     isLoading,
     isSuccess,
     isError,
-    error
+    
   } = useGetTodosQuery();
 
   // get the functions from the other apiSlice hooks
@@ -24,20 +23,18 @@ export const TodoList = () => {
 
 
   const onSubmit = (data) => {
-    addTodo({ userId: 1, title: newTodo, completed: false })
+    addTodo({ 
+      userId: 1, 
+      title: data.newTodo, 
+      completed: false })
     setNewTodo('');
   }
 
   const { register, handleSubmit, formState: { errors } } = useForm();
-  //   {
-  //   defaultValues: {
-  //     newTodo: '',
-  //   },
-  // });
 
   const newItemSection =
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="new-todo">Enter a new todo</label>'
+    <form className='todo-form' onSubmit={handleSubmit(onSubmit)}>
+      <label htmlFor="new-todo"></label>
       <div className="new-todo">
         <input
           className="signup__input"
@@ -62,7 +59,7 @@ export const TodoList = () => {
       content = <p>Loading...</p>
     } else if (isSuccess) {
       content = todos.map(todo => (
-        <article key={todo.id}>
+        <article className="todo-item"key={todo.id}>
           <div className="todo">
             <input
               type="checkbox"
@@ -75,11 +72,10 @@ export const TodoList = () => {
           <button className='trash' onClick={() => deleteTodo({ id: todo.id })}>
             <FaTrash />
           </button>
-
         </article>
       ))
     } else if (isError) {
-      content = <p>{error}</p>
+      content = <p>{isError?.error}</p> // not sure about this, but todos render and error goes away
     }
 
   return (

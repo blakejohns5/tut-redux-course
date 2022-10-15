@@ -4,8 +4,7 @@ This workspace and notes were coded, following Dave Gray's tutorial:
 
 [React Redux Full Course for Beginners | Redux Toolkit Complete Tutorial](https://www.youtube.com/watch?v=NqzdVN2tyvQ)
 
-Builds off of work off work in previous chapters.
-RTK Query will be used to work on a todo app.
+Users separate Todo List Project. RTK Query will be used to work on a todo app.
 
 ## Getting started
 
@@ -51,3 +50,9 @@ RTK Query creates custom hooks based on the methods that we provide. We can then
 ## Put the hook to use
 
 - In TodoList.js, import the hook: `import { useGetTodosQuery } from '../api/apiSlice';`
+
+
+## Other points covered:
+
+- full crud operations in apislice
+- tags / tagtypes in apislice ton control re-render

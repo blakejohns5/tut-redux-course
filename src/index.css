@@ -19,49 +19,21 @@ html {
 
 body {
   min-height: 100vh;
+  width: 100vw;
   font-size: 1.5rem;
-  /* padding: 0 10% 10%; */
-}
-
-input,
-textarea,
-select {
-  font: inherit;
-  margin-bottom: 1em;
-}
-
-
-button {
-  font: inherit;
-  background: var(--secondary-bg-color);  
-  color: var(--main-bg-color);  
-  padding: 0.25rem 1rem;
-  border-radius: 0.5rem;
-  margin-bottom: 2rem;
-}
-
-main {
-  max-width: 50rem;
-  margin: auto;
-}
-
-section {
-  margin-top: 1em;
-  
-  
+  padding: 5% 10%;
 }
 
 
 
 article {
   width: 100%;
-  margin: 0.5em 0.5em 0.5em 0;
-  border: 1px double var(--highlight-color);
-  border-radius: 10px;
-  padding: 1em;
+  margin: 0.5em 0;
+  border: 0.1rem black;
+  border-radius: 0.25rem;
+  padding: 2rem;
   background-color: var(--secondary-bg-color);
   color: #2d2d2d;
-  
 }
 
 h1 {
@@ -73,54 +45,6 @@ p {
   line-height: 1.4;
   font-size: 1.2rem;
   margin: 0.5em 0;
-}
-
-form {
-  
-  display: flex;
-  flex-direction: column;
-}
-
-
-
-.post__credit > {
-  font-size: 1rem;
-  color: var(--main-bg-color);
-}
-
-.post__credit > a {
-  margin-right: 2rem;
-}
-
-
-
-.reactionButton {
-  margin: 0 0.25em 0 0;
-  background: transparent;
-  border: none;
-  color: var(--secondary-bg-color);
-  font-size: 1rem;
-  color: var(--highlight-color);
-}
-
-
-.post__article {
-  border: none;
-  padding: 0;
-  margin: 0;
-  gap:1rem;
-}
-
-.post__article > label {
-  margin-bottom: 0.5rem;
-}
-
-.post__article > label, .post__article > input, .post__article > textarea {
-  display: flex;
-  align-items: center;
-  border-radius: 10px;  
-  
-  /* width: 80%; */
 }
 
 
@@ -135,19 +59,63 @@ form {
   padding: 0.5rem 10%;
 }
 
-.header > nav > ul {
-  margin-left: 5rem;
+
+
+.todo-form {
+  margin: 2rem 0;
   display: flex;
-    
-  gap: 3rem;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.nav__list ul {
-  display: flex;
-  list-style: none;
+.todo-form div {
+  width: 100%;
 }
 
-.nav__list a {  
-  text-decoration: none;
-  color: var(--secondary-bg-color);
+.new-todo > input {
+  width: 100%;
+  line-height: 3rem;
+  /* margin: 0; */
+  padding: 0;
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.todo-form button {
+  width: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  margin-left: 1.2rem;
+  border-radius: 0.2rem;
+  border: 0.1rem solid black;
+  
+  color: whitesmoke;
+  background-color: rgb(50, 186, 50);
+  
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+
+  justify-content: space-between;
+}
+
+.todo-item input {
+  padding-top: 1.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-right: 2rem;
+}
+
+.todo-item > button {
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(228, 130, 146);
+  border: none;
+  padding-top: 0.15rem;
 }
